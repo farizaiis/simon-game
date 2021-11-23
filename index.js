@@ -35,10 +35,23 @@ $('.btn').click(function () {
     playSound(userChosenColour);
 });
 
+function checkAnswer(currentLevel) {
+    //for check if the most recent user answer is the same as the game pattern
+    if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+        //for check that they have finished their sequence
+        if (userClickedPattern.length === gamePattern.length) {
+            setTimeout(function () {
+                nextSequence();
+            }, 1000);
+        }
+    } else {
+    }
+}
+
 function nextSequence() {
     //For up the level of the game when user cleare current level
     level++;
-    $("#level-title").text("Level " + level);
+    $('#level-title').text('Level ' + level);
 
     //Get random number 0-3 for getting index number
     let randomNumber = Math.floor(Math.random() * 4);

@@ -15,9 +15,9 @@ let started = false;
 //Declare level of the game, will be start from zero
 let level = 0;
 
-$(document).keypress(function () {
+$('.startbutton').click(function () {
     if (!started) {
-        //"Press A Key to Start", when the game has started, it will show "Level 0"
+        //when the game has started, it will show "Level 0"
         $('#level-title').text('Level ' + level);
         nextSequence();
         started = true;
@@ -26,7 +26,19 @@ $(document).keypress(function () {
 
 //Detect when any of the buttons are clicked and trigger a handler function.
 $('.btn').click(function () {
-    //Store the id of the button that got clicked.
+    if(!started) {
+        playSound('wrong');
+
+        $('#level-title').text('I told you Bruh to Press Start!');
+
+        $('body').addClass('game-over');
+        setTimeout(function () {
+            $('body').removeClass('game-over');
+        }, 200);
+        
+        startOver();
+    } else {
+        //Store the id of the button that got clicked.
     let userChosenColour = $(this).attr('id');
 
     //Push element that has been select/click by user variable userClickedPattern
@@ -37,6 +49,7 @@ $('.btn').click(function () {
     animatePress(userChosenColour);
     
     checkAnswer(userClickedPattern.length-1)
+    }
 });
 
 function checkAnswer(currentLevel) {
@@ -58,7 +71,7 @@ function checkAnswer(currentLevel) {
         }, 200);
 
         //Change the h1 title if the user got the answer wrong.
-        $('#level-title').text('Game Over, Press Any Key to Restart');
+        $('#level-title').text('Game Over, Press Start to Restart');
 
         //for restart the game when aswer wrong
         startOver();

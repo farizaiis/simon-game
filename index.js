@@ -32,7 +32,11 @@ $('.btn').click(function () {
     //Push element that has been select/click by user variable userClickedPattern
     userClickedPattern.push(userChosenColour);
 
+    //add sound and animated when click
     playSound(userChosenColour);
+    animatePress(userChosenColour);
+    
+    checkAnswer(userClickedPattern.length-1)
 });
 
 function checkAnswer(currentLevel) {
@@ -62,6 +66,9 @@ function checkAnswer(currentLevel) {
 }
 
 function nextSequence() {
+    //reset clickedpattern
+    userClickedPattern = [];
+
     //For up the level of the game when user cleare current level
     level++;
     $('#level-title').text('Level ' + level);

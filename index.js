@@ -17,6 +17,8 @@ $(".btn").click(function() {
     //Push element that has been select/click by user variable userClickedPattern
     userClickedPattern.push(userChosenColour);
 
+    playSound(userChosenColour);
+
 })
 
 function nextSequence() {
@@ -32,7 +34,11 @@ function nextSequence() {
     //Select the button with the same ID as the randomchosen and animate a flash
     $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
 
-    //Play the sounds by the chosencolor and from folder sounds
-    let audio = new Audio("sounds/" + randomChosenColour + ".mp3");
+    playSound(randomChosenColour);;
+}
+
+//Refactior playsound before, so will be more effective without DRY
+function playSound(name) {
+    let audio = new Audio("sounds/" + name + ".mp3");
     audio.play();
 }

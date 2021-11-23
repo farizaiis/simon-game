@@ -1,44 +1,76 @@
 // alert("Test js")
 
 //Declare button colours
-let buttonColours = ["red", "blue", "green", "yellow"]
+let buttonColours = ['red', 'blue', 'green', 'yellow'];
 
 //Pattern that game request
 let gamePattern = [];
 
 //Pattern that return from which user click
-var userClickedPattern = [];
+let userClickedPattern = [];
+
+//For keeping the game not started before user start it
+let started = false;
+
+//Declare level of the game, will be start from zero
+let level = 0;
+
+$(document).keypress(function () {
+    if (!started) {
+        //"Press A Key to Start", when the game has started, it will show "Level 0"
+        $('#level-title').text('Level ' + level);
+        nextSequence();
+        started = true;
+    }
+});
 
 //Detect when any of the buttons are clicked and trigger a handler function.
-$(".btn").click(function() {
+$('.btn').click(function () {
     //Store the id of the button that got clicked.
-    let userChosenColour = $(this).attr("id");
+    let userChosenColour = $(this).attr('id');
 
     //Push element that has been select/click by user variable userClickedPattern
     userClickedPattern.push(userChosenColour);
 
     playSound(userChosenColour);
-
-})
+});
 
 function nextSequence() {
+    //For up the level of the game when user cleare current level
+    level++;
+    $("#level-title").text("Level " + level);
+
     //Get random number 0-3 for getting index number
-    let randomNumber = Math.floor(Math.random() * 4)
+    let randomNumber = Math.floor(Math.random() * 4);
 
     //Get element by index that randomized
-    let randomChosenColour = buttonColours[randomNumber]
+    let randomChosenColour = buttonColours[randomNumber];
 
     //Push element that has been randomized
-    gamePattern.push(randomChosenColour)
+    gamePattern.push(randomChosenColour);
 
     //Select the button with the same ID as the randomchosen and animate a flash
-    $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
+    $('#' + randomChosenColour)
+        .fadeIn(100)
+        .fadeOut(100)
+        .fadeIn(100);
 
-    playSound(randomChosenColour);;
+    playSound(randomChosenColour);
 }
 
 //Refactior playsound before, so will be more effective without DRY
 function playSound(name) {
-    let audio = new Audio("sounds/" + name + ".mp3");
+    let audio = new Audio('sounds/' + name + '.mp3');
     audio.play();
+}
+
+//add animation to the user's click
+function animatePress(currentColor) {
+    //add this pressed class to the button that gets clicked
+    $('#' + currentColor).addClass('pressed');
+
+    //remove the pressed class after a 100 milliseconds.
+    setTimeout(function () {
+        $('#' + currentColor).removeClass('pressed');
+    }, 100);
 }

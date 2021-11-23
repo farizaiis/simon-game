@@ -45,6 +45,19 @@ function checkAnswer(currentLevel) {
             }, 1000);
         }
     } else {
+        playSound('wrong');
+
+        //When the user gets one of the answers wrong and then remove it after 200 milliseconds.
+        $('body').addClass('game-over');
+        setTimeout(function () {
+            $('body').removeClass('game-over');
+        }, 200);
+
+        //Change the h1 title if the user got the answer wrong.
+        $('#level-title').text('Game Over, Press Any Key to Restart');
+        
+        //for restart the game when aswer wrong
+        startOver();
     }
 }
 
@@ -87,3 +100,10 @@ function animatePress(currentColor) {
         $('#' + currentColor).removeClass('pressed');
     }, 100);
 }
+
+//for Restart the game when game over
+function startOver() {
+    level = 0;
+    gamePattern = [];
+    started = false;
+  }
